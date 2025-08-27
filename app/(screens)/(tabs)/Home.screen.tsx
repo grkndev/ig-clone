@@ -6,7 +6,10 @@ import { FlatList, ScrollView } from "react-native";
 
 export default function HomeScreen() {
   return (
-    <ScrollView className="flex-1 bg-white gap-2">
+    <ScrollView
+      className="flex-1 bg-white gap-2"
+      showsVerticalScrollIndicator={false}
+    >
       <Header />
       <Stories />
 
