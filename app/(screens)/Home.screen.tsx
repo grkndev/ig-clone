@@ -1,46 +1,54 @@
 import Header from "@/components/Header";
-import SeedCard from "@/components/SeedCard";
+import Seed from "@/components/Seed";
 import Stories from "@/components/Stories";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import Icons from "@/components/ui/icons";
 import React from "react";
-import { Pressable, Text, View } from "react-native";
-
+import { FlatList, ScrollView } from "react-native";
 
 export default function HomeScreen() {
-  
   return (
-    <View className="flex-1 bg-white gap-2">
+    <ScrollView className="flex-1 bg-white gap-2">
       <Header />
       <Stories />
 
-      <View className="mt-2 gap-2">
-        {/* Header */}
-        <View className="flex-row items-center justify-between px-4">
-          <View className="flex-row items-center gap-3">
-            <Avatar alt="user-avatar">
-              <AvatarImage source={{ uri: "https://github.com/shadcn.png" }} />
-              <AvatarFallback>
-                <Icons name="User" size={24} color="white" />
-              </AvatarFallback>
-            </Avatar>
-            <Text>Username</Text>
-          </View>
-          <Pressable onPress={() => {}} className="p-1">
-            <Icons name="EllipsisVertical" size={18} color="black" />
-          </Pressable>
-        </View>
-        {/* Content */}
-        <View>
-
-            <SeedCard />
-
-        </View>
-        {/* Actions */}
-        <View></View>
-        {/* Footer */}
-        <View></View>
-      </View>
-    </View>
+      <FlatList
+        scrollEnabled={false}
+        data={Array(10).fill(seedData)}
+        renderItem={({ item }) => <Seed data={item} />}
+        keyExtractor={(item, index) => index.toString()}
+        showsVerticalScrollIndicator={false}
+      />
+    </ScrollView>
   );
 }
+
+export type SeedData = {
+  id: number;
+  user: {
+    id: number;
+    username: string;
+    avatar: string;
+  };
+  content: string[];
+  createdAt: string;
+  likes: number;
+  comments: number;
+  shares: number;
+};
+
+const seedData: SeedData = {
+  id: 1,
+  user: {
+    id: 14563454353,
+    username: "username",
+    avatar: "https://github.com/shadcn.png",
+  },
+  content: [
+    "https://picsum.photos/430",
+    "https://picsum.photos/430",
+    "https://picsum.photos/430",
+  ],
+  createdAt: "2021-01-01",
+  likes: 100,
+  comments: 100,
+  shares: 100,
+};
