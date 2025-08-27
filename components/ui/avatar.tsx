@@ -1,130 +1,38 @@
-import { cn } from "@/lib/utils";
-import React, { createContext, ReactNode, useContext, useState } from "react";
-import { Image, ImageProps, View, ViewProps } from "react-native";
+import { cn } from '@/lib/utils';
+import * as AvatarPrimitive from '@rn-primitives/avatar';
 
-interface AvatarContextType {
-  imageLoaded: boolean;
-  imageError: boolean;
-  setImageLoaded: (loaded: boolean) => void;
-  setImageError: (error: boolean) => void;
-}
-
-const AvatarContext = createContext<AvatarContextType | undefined>(undefined);
-
-const useAvatarContext = () => {
-  const context = useContext(AvatarContext);
-  if (!context) {
-    throw new Error("Avatar components must be used within Avatar");
-  }
-  return context;
-};
-
-interface AvatarProps extends ViewProps {
-  alt?: string;
-  className?: string;
-  children: ReactNode;
-}
-
-export function Avatar({ alt, className, children, ...props }: AvatarProps) {
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const [imageError, setImageError] = useState(false);
-
+function Avatar({
+  className,
+  ...props
+}: AvatarPrimitive.RootProps & React.RefAttributes<AvatarPrimitive.RootRef>) {
   return (
-    <AvatarContext.Provider
-      value={{
-        imageLoaded,
-        imageError,
-        setImageLoaded,
-        setImageError,
-      }}
-    >
-      <View
-        className={cn(
-          "relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full",
-          className
-        )}
-        {...props}
-      >
-        {children}
-      </View>
-    </AvatarContext.Provider>
-  );
-}
-
-interface AvatarImageProps extends Omit<ImageProps, "source"> {
-  source: ImageProps["source"];
-  className?: string;
-}
-
-export function AvatarImage({ source, className, ...props }: AvatarImageProps) {
-  const { setImageLoaded, setImageError, imageLoaded, imageError } =
-    useAvatarContext();
-
-  const handleLoad = () => {
-    setImageLoaded(true);
-    setImageError(false);
-  };
-
-  const handleError = () => {
-    setImageLoaded(false);
-    setImageError(true);
-  };
-
-  const handleLoadStart = () => {
-    setImageLoaded(false);
-    setImageError(false);
-  };
-
-  if (imageError) {
-    return null;
-  }
-
-  return (
-    <Image
-      source={source}
-      onLoad={handleLoad}
-      onError={handleError}
-      onLoadStart={handleLoadStart}
-      className={cn("aspect-square h-full w-full", className)}
-      style={{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-      }}
+    <AvatarPrimitive.Root
+      className={cn('relative flex size-8 shrink-0 overflow-hidden rounded-full', className)}
       {...props}
     />
   );
 }
 
-interface AvatarFallbackProps extends ViewProps {
-  className?: string;
-  children: ReactNode;
+function AvatarImage({
+  className,
+  ...props
+}: AvatarPrimitive.ImageProps & React.RefAttributes<AvatarPrimitive.ImageRef>) {
+  return <AvatarPrimitive.Image className={cn('aspect-square size-full', className)} {...props} />;
 }
 
-export function AvatarFallback({
+function AvatarFallback({
   className,
-  children,
   ...props
-}: AvatarFallbackProps) {
-  const { imageLoaded, imageError } = useAvatarContext();
-
-  if (imageLoaded && !imageError) {
-    return null;
-  }
-
+}: AvatarPrimitive.FallbackProps & React.RefAttributes<AvatarPrimitive.FallbackRef>) {
   return (
-    <View
+    <AvatarPrimitive.Fallback
       className={cn(
-        "flex h-full w-full items-center justify-center rounded-full bg-muted",
+        'bg-muted flex size-full flex-row items-center justify-center rounded-full',
         className
       )}
       {...props}
-    >
-      {children}
-    </View>
+    />
   );
 }
 
-export { StoryAvatar } from "./story-avatar";
+export { Avatar, AvatarFallback, AvatarImage };

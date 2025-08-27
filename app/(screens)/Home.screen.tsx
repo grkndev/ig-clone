@@ -8,6 +8,10 @@ export default function HomeScreen() {
     <View className="flex-1 bg-white">
       <Header />
       <Stories />
+
+      <View>
+        
+      </View>
     </View>
   );
 }

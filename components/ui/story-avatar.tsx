@@ -1,13 +1,14 @@
 import { cn } from "@/lib/utils";
-import React, { ReactNode } from "react";
+import React from "react";
 import { View } from "react-native";
 import Svg, { Circle, Defs, LinearGradient, Stop } from "react-native-svg";
-import { Avatar } from "./avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
+import Icons from "./icons";
 
 interface StoryAvatarProps {
   size?: number;
   className?: string;
-  children?: ReactNode;
+  image_url?: string;
   hasStory?: boolean;
   isViewed?: boolean;
 }
@@ -15,7 +16,7 @@ interface StoryAvatarProps {
 export function StoryAvatar({
   size = 80,
   className,
-  children,
+  image_url,
   hasStory = true,
   isViewed = false,
   ...props
@@ -72,8 +73,12 @@ export function StoryAvatar({
         <Avatar
           className="w-full h-full"
           style={{ width: innerSize - 4, height: innerSize - 4 }}
+          alt={image_url || "story-avatar"}
         >
-          {children}
+          <AvatarImage source={{ uri: image_url }} />
+          <AvatarFallback>
+            <Icons name="User" size={24} color="white" />
+          </AvatarFallback>
         </Avatar>
       </View>
     </View>
