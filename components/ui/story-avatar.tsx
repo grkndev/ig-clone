@@ -39,8 +39,8 @@ export function StoryAvatar({
               y2="100%"
             >
               {isViewed ? [
-                <Stop key="0" offset="0%" stopColor="#9CA3AF" />,
-                <Stop key="100" offset="100%" stopColor="#6B7280" />
+                <Stop key="0" offset="0%" stopColor="#c3cad6" />,
+                <Stop key="100" offset="100%" stopColor="#c3cad6" />
               ] : [
                 <Stop key="0" offset="0%" stopColor="#833AB4" />,
                 <Stop key="25" offset="25%" stopColor="#C13584" />,
