@@ -1,4 +1,4 @@
-import { SeedData } from "@/app/(screens)/Home.screen";
+import { SeedData } from "@/app/(screens)/(tabs)/Home.screen";
 import React from "react";
 import { Image, Text, View } from "react-native";
 import { useSharedValue } from "react-native-reanimated";

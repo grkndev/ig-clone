@@ -1,4 +1,4 @@
-import { SeedData } from '@/app/(screens)/Home.screen'
+import { SeedData } from '@/app/(screens)/(tabs)/Home.screen'
 import React from 'react'
 import { Pressable, Text, TouchableOpacity, View } from 'react-native'
 import SeedCard from './SeedCard'
