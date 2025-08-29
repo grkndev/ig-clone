@@ -82,7 +82,9 @@ const TabBarComponent = ({
           >
             <Avatar alt="user-avatar">
               <AvatarImage source={{ uri: "https://github.com/shadcn.png" }} />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarFallback>
+                <Icons name="User" size={24} color="white" />
+              </AvatarFallback>
             </Avatar>
           </TouchableOpacity>
         </View>

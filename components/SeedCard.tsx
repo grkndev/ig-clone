@@ -38,7 +38,7 @@ export default function SeedCard({ data }: { data: SeedData["content"] }) {
 
   const onPressPagination = (index: number) => {
     ref.current?.scrollTo({
-      count: index - progress.value,
+      count: index - progress.get(),
       animated: true,
     });
   };
@@ -54,7 +54,7 @@ export default function SeedCard({ data }: { data: SeedData["content"] }) {
         ref={ref}
         {...baseOptions}
         onProgressChange={(_, absoluteProgress) => {
-          progress.value = absoluteProgress;
+          progress.set(absoluteProgress);
           setCurrentIndex(Math.round(absoluteProgress));
         }}
         loop={false}
