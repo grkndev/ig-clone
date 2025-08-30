@@ -4,7 +4,7 @@ import StoryCard from "./StoryCard";
 
 export default function Stories() {
   return (
-    <View className="flex-row gap-4 px-4">
+    <View className="flex-row gap-4">
       <FlatList
         data={stories}
         renderItem={({ item }) => (

@@ -11,6 +11,9 @@ type StoryCardProps = {
   isViewed: boolean;
   story_url: string;
   isMyStory: boolean;
+  size?: number;
+  showName?: boolean;
+  plusIconSize?: number;
 };
 
 export default function StoryCard(props: StoryCardProps) {
@@ -21,16 +24,16 @@ export default function StoryCard(props: StoryCardProps) {
         Linking.openURL(props.story_url);
       }}
     >
-      <StoryAvatar size={80} hasStory={!props.isMyStory} isViewed={props.isViewed} image_url={props.image} />
+      <StoryAvatar size={props.size || 80} hasStory={!props.isMyStory} isViewed={props.isViewed} image_url={props.image} />
        {
         props.isMyStory ? (
-          <View className="absolute bottom-6 border-2 border-white right-0 bg-blue-500 rounded-full p-1">
-            <Icons name="Plus" size={16} color="white" />
+          <View className="absolute bottom-0 border-2 border-white right-0 bg-blue-500 rounded-full p-1">
+            <Icons name="Plus" size={props.plusIconSize || 12} color="white" />
           </View>
         ) : null
        }
      
-      <Text className="text-sm">{props.isMyStory ? "My Story" : props.name}</Text>
+      {props.showName && <Text className="text-sm">{props.isMyStory ? "My Story" : props.name}</Text>}
     </TouchableOpacity>
   );
 }
