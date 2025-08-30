@@ -112,7 +112,10 @@ function ProfileHeader() {
 
 function ProfileTab() {
   return (
-    <View className="w-full pt-2 flex-row items-center justify-between">
+    <TouchableOpacity onPress={() => {
+      console.log("test")
+    }}>
+      <View className="w-full pt-2 flex-row items-center justify-between">
       <View className="flex-row items-center gap-2">
         <Icons name="Lock" size={24} color="black" />
         <Text className="font-bold text-xl">grkndev</Text>
@@ -127,5 +130,6 @@ function ProfileTab() {
         </TouchableOpacity>
       </View>
     </View>
+    </TouchableOpacity>
   );
 }
