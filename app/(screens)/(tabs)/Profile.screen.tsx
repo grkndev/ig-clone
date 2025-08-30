@@ -1,12 +1,47 @@
+import { FeedBox } from "@/components/Feed";
 import Stories from "@/components/Stories";
 import StoryCard from "@/components/StoryCard";
 import Icons from "@/components/ui/icons";
 import React from "react";
-import { Linking, Text, TouchableOpacity, View } from "react-native";
+import {
+  FlatList,
+  Linking,
+  Text,
+  TouchableOpacity,
+  View,
+  useWindowDimensions
+} from "react-native";
 
 export default function ProfileScreen() {
+  const { width: screenWidth } = useWindowDimensions();
+  
+  // Calculate item width: (screenWidth - padding - gaps) / 3
+  // px-4 = 16px on each side, so total padding = 32px
+  // 2 gaps between 3 items = 2px
+  const itemWidth = (screenWidth - 32 - 2) / 3;
+  
   return (
-    <View className="flex-1 items-center justify-center gap-4 bg-white px-4">
+    <View className="flex-1 bg-white">
+      <FlatList
+        data={Array.from({ length: 12 })}
+        numColumns={3}
+        columnWrapperStyle={{ gap: 1 }}
+        ItemSeparatorComponent={() => <View style={{ height: 1 }} />}
+        ListHeaderComponent={<ProfileContent />}
+        renderItem={({ item, index }) => (
+          <FeedBox width={itemWidth} />
+        )}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingHorizontal: 16 }}
+      />
+    </View>
+  );
+}
+
+function ProfileContent() {
+  return (
+    <View className="items-center justify-center gap-4 pb-4">
+      <ProfileTab />
       <ProfileHeader />
 
       <View className="flex-col items-start justify-center gap-3">
@@ -25,7 +60,7 @@ export default function ProfileScreen() {
           </TouchableOpacity>
         </View>
       </View>
-      <View className="flex-row gap-4 w-full">
+      <View className="flex-row gap-2 w-full">
         <TouchableOpacity className="bg-zinc-200 p-2 rounded-md flex-1 items-center justify-center">
           <Text>Edit Profile</Text>
         </TouchableOpacity>
@@ -35,9 +70,6 @@ export default function ProfileScreen() {
       </View>
       <View>
         <Stories />
-      </View>
-      <View className="flex-1 bg-red-500 w-full">
-        <Text>Posts</Text>
       </View>
     </View>
   );
@@ -73,6 +105,26 @@ function ProfileHeader() {
             <Text>following</Text>
           </View>
         </View>
+      </View>
+    </View>
+  );
+}
+
+function ProfileTab() {
+  return (
+    <View className="w-full pt-2 flex-row items-center justify-between">
+      <View className="flex-row items-center gap-2">
+        <Icons name="Lock" size={24} color="black" />
+        <Text className="font-bold text-xl">grkndev</Text>
+        <Icons name="ChevronDown" size={24} color="black" />
+      </View>
+      <View className="flex-row items-center gap-4">
+        <TouchableOpacity onPress={() => {}}>
+          <Icons name="SquarePlus" size={24} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => {}}>
+          <Icons name="Menu" size={24} color="black" />
+        </TouchableOpacity>
       </View>
     </View>
   );
